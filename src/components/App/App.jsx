@@ -4,7 +4,7 @@ import { ContactList } from 'components/ContactList/ContactList';
 import { Filter } from 'components/Filter/Filter';
 
 import initialContacts from 'components/data.json';
-import { Title } from './App.styled';
+import { Title, Subtitle } from './App.styled';
 
 export class App extends Component {
   state = {
@@ -41,6 +41,12 @@ export class App extends Component {
       : contacts;
   };
 
+  deleteContact = contactID => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactID),
+    }));
+  };
+
   render() {
     const { filter } = this.state;
     return (
@@ -48,9 +54,12 @@ export class App extends Component {
         <Title>Phonebook</Title>
         <ContactForm onSubmit={this.addContact} />
 
-        <h2>Contacts</h2>
+        <Subtitle>Contacts</Subtitle>
         <Filter value={filter} onChange={this.findContact} />
-        <ContactList contacts={this.onFilterContacts} />
+        <ContactList
+          contacts={this.onFilterContacts}
+          onDeleteContact={this.deleteContact}
+        />
       </div>
     );
   }

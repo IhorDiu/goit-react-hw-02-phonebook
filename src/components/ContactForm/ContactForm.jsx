@@ -1,5 +1,6 @@
+import propTypes from 'prop-types';
 import { Formik } from 'formik';
-import { Input, FormInput } from './ContactForm.styled';
+import { Input, FormInput, AddButton } from './ContactForm.styled';
 import { nanoid } from 'nanoid';
 
 const initialValues = { name: '', number: '' };
@@ -40,8 +41,12 @@ export const ContactForm = ({ onSubmit }) => {
           />
         </label>
 
-        <button type="submit">Add contact</button>
+        <AddButton type="submit">Add contact</AddButton>
       </FormInput>
     </Formik>
   );
+};
+
+ContactForm.propTypes = {
+  onSubmit: propTypes.func.isRequired,
 };
