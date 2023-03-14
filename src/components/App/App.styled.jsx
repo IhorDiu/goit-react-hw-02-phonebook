@@ -22,13 +22,7 @@ export const AddForm = styled.div`
   border-radius: 4px;
 `;
 
-export const AddInput = styled.input`
-  display: flex;
-  align-items: center;
-  margin: 8px 0 30px 0px;
-  padding: 4px;
-  border-radius: 4px;
-`;
+
 
 export const AddButton = styled.button`
   display: flex;

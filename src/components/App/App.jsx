@@ -1,44 +1,51 @@
 import { Component } from 'react';
-import { Title, AddForm, AddInput, AddButton, ContactForm } from './App.styled';
+import { ContactForm } from 'components/ContactForm/ContactForm';
+import { ContactList } from 'components/ContactList/ContactList';
+import { Filter } from 'components/Filter/Filter';
+
+import initialContacts from 'components/data.json';
+import { Title } from './App.styled';
 
 export class App extends Component {
   state = {
-    contacts: [],
-    name: '',
-    number: '',
+    contacts: initialContacts,
+    filter: '',
   };
 
+  addContact = newContact => {
+    this.setState(preState => {
+      return {
+        contacts: [...preState.contacts, newContact],
+      };
+    });
+  };
+
+  findContact = e => {
+    this.setState({ filter: e.target.value });
+  };
+
+  onFilterContacts = () => {
+    const { contacts, filter } = this.state;
+    const filterValue = filter.toLowerCase();
+
+    return filter
+      ? contacts.filter(contact =>
+          contact.name.toLowerCase().includes(filterValue)
+        )
+      : contacts;
+  };
+  
+
   render() {
+    const { filter } = this.state;
     return (
       <div>
         <Title>Phonebook</Title>
-        <AddForm>
-          <h2>Name</h2>
-          <AddInput
-            type="text"
-            name="name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-          />
-          <h2>Number</h2>
-          <AddInput
-            type="tel"
-            name="number"
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-          />
-          <AddButton type="button">Add contact</AddButton>
-        </AddForm>
-        <ContactForm>
-          <h2>Contacts</h2>
-          <ul>
-            <li>Rosie Simspon: 645-17-79</li>
-            <li>Hermiona Kline: 443-89-12</li>
-            <li>Eden Clements: 459-12-56</li>
-          </ul>
-        </ContactForm>
+        <ContactForm onSubmit={this.addContact} />
+
+        <h2>Contacts</h2>
+        <Filter value={filter} onChange={this.findContact} />
+        <ContactList contacts={this.onFilterContacts} />
       </div>
     );
   }
