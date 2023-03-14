@@ -6,13 +6,14 @@ const initialValues = { name: '', number: '' };
 
 export const ContactForm = ({ onSubmit }) => {
   const handleSubmit = (values, { resetForm }) => {
-    console.log(values);
     onSubmit({
       id: nanoid(),
       ...values,
     });
+
     resetForm();
   };
+
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       <FormInput autoComplete="off">
