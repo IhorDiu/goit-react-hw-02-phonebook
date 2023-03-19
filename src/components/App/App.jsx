@@ -3,7 +3,7 @@ import { ContactForm } from 'components/ContactForm/ContactForm';
 import { ContactList } from 'components/ContactList/ContactList';
 import { Filter } from 'components/Filter/Filter';
 
-import initialContacts from 'components/data.json';
+import initialContacts from '../../data.json';
 import { Title, Subtitle } from './App.styled';
 
 export class App extends Component {
